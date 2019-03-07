@@ -8,7 +8,7 @@ def sniffPackets(packet):
 
 def main():
     print("custom packet sniffer")
-    sniff(filter="ip",iface="wlan0",prn=sniffPackets)   
+    sniff(filter="ip",iface=conf.iface,prn=sniffPackets)   
           
           
 if __name__ == '__main__':

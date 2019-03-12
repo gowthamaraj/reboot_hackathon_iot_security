@@ -1,31 +1,61 @@
+import threading
+from queue import Queue
+import time
 import socket
-import sys
 
-if len(sys.argv)!=3: # to verify if all arguments
-    print("Usage python Psanner.py [ip] [ports]")
-    print("Exemple python Pscanner.py 192.168.1.10 21,22,25")
-    sys.exit()
-    
-ports = sys.argv[2].split(",") # assign port to ports variable
-ports=[int(p) for p in ports] # cast list items to integer type
-ip=sys.argv[1] # assign ip address
-i=1 # variable use to print once
+print_lock = threading.Lock()
 
-for port in ports: # starting port scanning
-    try: # exception
 
-        sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)# socket object initiate
-        rep=sock.connect_ex((ip,port)) # connecting to target
-        if rep==0: # check the respond after connection attemp
-                if i==1: # just to print once
-                    print("Report for {0}:".format(ip))
-                    i=i-1
 
-                    print("Port {0} Open".format(port)) # print if port open
-                else:
-                    print("Port {0} close".format(port)) # print if port close
-    except Exception as e:
+target = 'xploreitcorp.com'
+
+
+
+def portscan(port):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        con = s.connect((target,port))
+        with print_lock:
+            print('port',port)
+        con.close()
+    except:
         pass
 
-sock.close()# close socket
-print("thewind")
+    
+def threader():
+    while True:
+        # gets an worker from the queue
+        worker = q.get()
+
+        # Run the example job with the avail worker in queue (thread)
+        portscan(worker)
+
+        # completed with the job
+        q.task_done()
+
+
+
+        
+
+# Create the queue and threader 
+q = Queue()
+
+# how many threads are we going to allow for
+for x in range(30):
+     t = threading.Thread(target=threader)
+
+     # classifying as a daemon, so they will die when the main dies
+     t.daemon = True
+
+     # begins, must come after daemon definition
+     t.start()
+
+
+start = time.time()
+
+# 100 jobs assigned.
+for worker in range(1,100):
+    q.put(worker)
+
+# wait until the thread terminates.
+q.join()

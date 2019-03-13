@@ -33,15 +33,15 @@ def Main():
     passwd='raspberry'
     con = connect(host, user, passwd)
     
-    #with open(dic, 'r') as infile:
-        #start = time.time()
-        #for line in infile:
-            #passwd = line.strip('\r\n')
-            #print "Testing: " + str(passwd)
-            #con = connect(host, user, passwd)
-        #end = time.time()
-        #t_time = end - start
-        #print "Total runtime was -- ", t_time, "second"
+    with open(dic, 'r') as infile:
+        start = time.time()
+        for line in infile:
+            passwd = line.strip('\r\n')
+            print "Testing: " + str(passwd)
+            con = connect(host, user, passwd)
+        end = time.time()
+        t_time = end - start
+        print "Total runtime was -- ", t_time, "second"
                      
 if __name__ == '__main__':
     Main()

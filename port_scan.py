@@ -9,7 +9,7 @@ print_lock = threading.Lock()
 
 target = 'xploreitcorp.com'
 
-
+port_all=""
 
 def portscan(port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,6 +17,8 @@ def portscan(port):
         con = s.connect((target,port))
         with print_lock:
             print('port',port)
+            port_all=port_all+","+str(port)
+            print()
         con.close()
     except:
         pass

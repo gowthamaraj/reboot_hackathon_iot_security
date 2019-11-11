@@ -8,8 +8,10 @@ The harsh reality is that IoT still tends to be an afterthought when it comes to
 ## Objective:
 
 Monitoring and detection:
-1.I used Scrapy library from python for analysing the network packet. The attributes such as window size, packet length, size... etc as input the K-near algorithm for training and detecting.
+1. I used Scrapy library from python for analysing the network packet. The attributes such as window size, packet length, size... etc as input the K-near algorithm for training and detecting. 
+
 2. Graphical interface is used for montioring & system the network, and DDoS detection.
+
 3. Individual python modules are created to search for weak ftp/ssh pwd by brute force - this can be controlled by a website which is created with flask framework.
 
 
